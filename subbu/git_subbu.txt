@@ -1,4 +1,5 @@
 10 Git Commands Every Developer Should Know
+---------------------------------------------
 
 Source: https://www.freecodecamp.org/news/10-important-git-commands-that-every-developer-should-know/
 
