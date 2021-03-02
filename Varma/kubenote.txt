@@ -1,0 +1,229 @@
+#controlplane $ cat poddefinition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+spec:
+  containers:
+    - name: redis
+      image: redis
+	  
+	  
+#---------------------------------------------------------------------------------
+
+#controlplane $ cat replicaset-definition-1.yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        
+ #controlplane $ cat replicaset-definition-2.yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        
+-----------------------------------------------------------------------
+##controlplane $ kubectl edit replicaset new-replica-set
+kubectl get replicaset new-replica-set -o yaml > test.yaml
+kubectl scale replicaset new-replica-set --replicaset=5
+
+--------------------------------------------------------------------
+
+deployements
+
+ #controlplane $ cat deployement-definition.yaml
+apiVersion: apps/v1
+kind: Deployement
+metadata:
+  name: deployement-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: busybox-pod
+  template:
+    metadata:
+      labels:
+        name: busybox-pod
+    spec:
+      containers:
+      - name: busybox-container
+        image: busybox888
+        command:
+        - sh 
+        - "-c"
+        - echo Hello Kubernetes! && sleep 3600
+
+---------------------------------------------------------------------------------------------------
+master $ kubectl get pods -o wide
+NAME      READY   STATUS    RESTARTS   AGE     IP          NODE     NOMINATED NODE   READINESS GATES
+busybox   1/1     Running   0          3m39s   10.36.0.2   node01   <none>           <none>
+ningx     1/1     Running   0          7m32s   10.44.0.1   node03   <none>           <none>
+redis     1/1     Running   0          3m59s   10.36.0.1   node01   <none>           <none>
+master $
+
+Output with JSON format:
+master $ kubectl create namespace test-123 --dry-run -o json
+{
+    "kind": "Namespace",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "test-123",
+        "creationTimestamp": null
+    },
+    "spec": {},
+    "status": {}
+}
+master $
+
+
+kubectl run nginx-pod --image nginx:alpine
+
+kubectl run redis --image=redis:alpine -l tier=db
+
+kubectl expose pod redis --port=6379 --name redis-service
+
+kubectl create deployment webapp --image=kodekloud/webapp-color. The scale the webapp to 3 using command kubectl scale deployment/webapp --replicas=3
+
+controlplane $ kubectl create deployment webapp --image=kodekloud/webapp-colordeployment.apps/webapp created
+controlplane $  kubectl scale deployment/webapp --replicas=3
+deployment.apps/webapp scaled
+
+Create a new pod called custom-nginx using the nginx image and expose it on container port 8080
+kubectl run custom-nginx --image=nginx --port=8080
+
+Create a new namespace called dev-ns.
+kubectl create ns dev-ns
+
+
+Create a new deployment called redis-deploy in the dev-ns namespace with the redis image. It should have 2 replicas.
+controlplane $ kubectl create deployment redis-deploy --image=redis -n dev-ns
+deployment.apps/redis-deploy created
+controlplane $ kubectl scale deployment redis-deploy --replicas=2 -n dev-ns
+deployment.apps/redis-deploy scaled
+
+
+Create a pod called httpd using the image httpd:alpine in the default namespace. Next, create a service of type ClusterIP by the same name (httpd). The target port for the service should be 80.
+controlplane $ kubectl run httpd --image=httpd:alpine --port=80 --expose
+service/httpd created
+pod/httpd created
+
+--------------------------------------------------------------------------------------------
+
+
+
+Kubernetes Namespaces
+
+kubernetes created 3 default name spaces
+
+1. kube-system 
+
+-->kuberneted creates setof pods and services such as networking services and DNS services and etc. to Isolate this from user and 
+   avoid accidently delete , kubernets creates at kube-system at cluster start up 
+
+2.Default
+---> 
+
+3.kube-public 
+
+--> this is where all the resouces that needs to be availble to all users will be created 
+
+can allocate resouce limits and policys to perticulr Name space as required 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+While you would be working mostly the declarative way - using definition files, imperative commands can help in getting one time tasks done quickly, as well as generate a definition template easily. This would help save a considerable amount of time during your exams.
+
+Before we begin, familiarize with the two options that can come in handy while working with the below commands:
+
+--dry-run: By default as soon as the command is run, the resource will be created. If you simply want to test your command, use the --dry-run=client option. This will not create the resource, instead, tell you whether the resource can be created and if your command is right.
+
+-o yaml: This will output the resource definition in YAML format on the screen.
+
+Use the above two in combination to generate a resource definition file quickly, that you can then modify and create resources as required, instead of creating the files from scratch.
+
+POD
+Create an NGINX Pod
+kubectl run nginx --image=nginx
+
+Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
+kubectl run nginx --image=nginx  --dry-run=client -o yaml
+
+Deployment
+Create a deployment
+kubectl create deployment --image=nginx nginx
+
+Generate Deployment YAML file (-o yaml). Don't create it(--dry-run)
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
+
+IMPORTANT:
+kubectl create deployment does not have a --replicas option. You could first create it and then scale it using the kubectl scale command.
+
+Save it to a file - (If you need to modify or add some other details)
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml
+You can then update the YAML file with the replicas or any other field before creating the deployment.
+
+Service
+Create a Service named redis-service of type ClusterIP to expose pod redis on port 6379
+kubectl expose pod redis --port=6379 --name redis-service --dry-run=client -o yaml
+(This will automatically use the pod's labels as selectors)
+
+Or
+
+kubectl create service clusterip redis --tcp=6379:6379 --dry-run=client -o yaml  (This will not use the pods labels as selectors, instead it will assume selectors as app=redis. You cannot pass in selectors as an option. So it does not work very well if your pod has a different label set. So generate the file and modify the selectors before creating the service)
+Create a Service named nginx of type NodePort to expose pod nginx's port 80 on port 30080 on the nodes:
+
+kubectl expose pod nginx --port=80 --name nginx-service --type=NodePort --dry-run=client -o yaml
+(This will automatically use the pod's labels as selectors, but you cannot specify the node port. You have to generate a definition file and then add the node port in manually before creating the service with the pod.)
+Or
+kubectl create service nodeport nginx --tcp=80:80 --node-port=30080 --dry-run=client -o yaml
+
+(This will not use the pods labels as selectors)
+Both the above commands have their own challenges. While one of it cannot accept a selector the other cannot accept a node port. I would recommend going with the `kubectl expose` command. If you need to specify a node port, generate a definition file using the same command and manually input the nodeport before creating the service.
+
+------------------------------------------------------------------------------------------------------------
