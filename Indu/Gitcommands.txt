@@ -1,0 +1,18 @@
+
+Introduction
+Git commands are an essential lesson that every developer needs to master at some point. To use the full potential of Git, the popular version control system, you need to know how to use Git commands.
+
+In this tutorial, you will find all the commonly used Git commands as well as a downloadable cheat sheet. 
+
+Commonly used Git commands with downloadable Cheat Sheet.
+A List of Git Commands
+Git Setup
+Create a new Git repository from an existing directory:
+
+git init [directory]
+Clone a repository (local or remote via HTTP/SSH):
+
+git clone [repo / URL]
+Clone a repository into a specified folder on your local machine:
+
+git clone [repo / URL] [folder]
