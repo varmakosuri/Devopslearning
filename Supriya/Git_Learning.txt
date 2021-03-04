@@ -87,4 +87,5 @@ Git Branching:
 •	Git pull 
 •	Stash: changes somewhere and retrieve it later, like it is temporary holding place.
 •	Git reset “name of the file”
-•	
+
+Varma :https://www.youtube.com/watch?v=mU-hYeBBOzQ&feature=youtu.be
