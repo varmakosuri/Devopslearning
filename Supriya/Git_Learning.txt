@@ -1,0 +1,91 @@
+GIT & GITHUB
+https://www.youtube.com/watch?v=xuB1Id2Wxak&t=337s
+Version control:  Is the management of changes to documents, computer programs, large websites & other collection of information.
+Every Change will create a snapshot of a project, and these snapshots are called as different versions.
+Why Version control: 
+•	Collaboration, which reduces conflicts in work.
+•	We can roll back to previous version if necessary 
+•	Backup:  if central server crashes, a backup is always available in your local servers.
+•	Analyze: provides proper description, what exactly was changed, when it was changed
+•	Storing the data: Snapshots of all versions are properly documented and stored, versions are also named accurately.
+Version control tools:  git, apache subversion SVN, CVS, mercurial.
+GIT is a distributed version control management tool which track the changes in code
+•	Free and open source.
+•	Installed in local repository
+•	Internet is not required
+•	https://git-scm.com/download/win
+•	Features: Distributes, compatible, non-linear, branching, lightweight( do not take lot of space), speed (since it in local repo, do not take much time to fetch data), opensource , reliable (backups), secure(SHA1), economical (free).
+Repository:  A directory or a storage space where projects are stored. 
+Types of repositories: Central repo (GitHub/online host)- meant for team to share and exchange data & Local repo (folder in a local machine) – only admin of the machine can work.
+Git operations & Commands:
+•	Git bash emulator:  where we run commands in this terminal
+•	git init : to create local repo ( .git folder will be created in local repo)
+•	We usually call remote repo as “Origin”.
+•	git remote add origin “provide path from github” (origin is linked/added to local rep)
+•	git remote show origin – displays the origin path
+•	git remote rm origin – if we give origin path incorrectly, we can use this command. Once removed… add valid origin path.
+•	git pull origin main (fetching files from origin into local repo, main is the remote repo name)
+•	git status: provide details of what are the new files are added In the Index, modified the existing file, deletion. (o/p: changes not staged for commit)
+•	Untracked files: are those which are not added in the Index, to commit the changes then we need to add the modified file into Index first. (git add “new file name”)
+•	git clear: clears the data
+•	git add “new file name” – only 1 file can be added (o/p: changes to be committed).
+•	git add -A: we can add all files at a time (o/p: changes to be committed).
+•	we can commit the modified files to remote repo once we add the files 
+•	git commit -m “adding first commit in local repo”: we can see what exactly have changed, who is user
+•	git commit -a -m “adding 3 files”: multiple files can be committed at once.
+•	git log - stores the details about our commits (o/p: commit unique id, author, date, message)
+•	git branch firstbranch – creates branch, we can add new file to specific branch
+•	git checkout firstbranch: switch to new branch- moving from 1 branch to another branch
+•	eg: git branch firstbranch, git checkout firstbranch, git add “new file name”, git commit -m “making changes in firstbranch”, (which means not in the master file)
+•	ls: test, test1.test2.test3, readme (provides what r the files are present in this branch
+•	git checkout master (come out of branch to master)
+•	ls: provides the files vch r present in master (test, test1,test2,readme)
+•	git merge firstbranch: merging firstbranch files into master (merging test3 into master)
+•	ls: provides the files vch r present in master (test, test1,test2,test3,readme)
+•	git checkout firstbranch : to go back to firstbranch from master.
+•	Now modify the test3 and add lines
+•	Git commit -a -m “modifying test3”
+•	Cat test3.txt : will display the data which we have modified in the document.
+•	Rebasing : 
+•	git pull = git fetch + git merge
+•	git rebase master: o/p – current branch firstbranch is up to date
+•	git push : 
+•	ssh  -T git@github.com
+•	revert :
+•	  
+Workflow:
+Work directory (add)-> staging area(commit)->local git(push, fetch)->github
+
+GITHUB: A website to host your repositories online.
+•	Remote repository/ central repository
+•	everyday team member should push their code to remote repository.
+•	Internet is required
+•	Core hosting platform for version control collaboration
+Git Command:
+Clone: Bring a repository that is hosted in GitHub into a folder on your local repository.
+Add: Track your files and changes in Git
+Commit: Save your file in Git
+Push: Upload Git commits to a remote repository like GitHub.
+Pull: Download changes from remote repository into your local machine.
+To resolve the conflicts: two ways - Branching and Merging 
+After committing: Each commit has unique identifier
+•	+ sign means lines are added to this file.( Light green colour)
+•	- sign means lines were deleted to the file (Pink color)
+•	Anything with white color states that .. there is no change in the code.
+Git Commands in Terminal: 
+•	git status:
+•	git add:
+•	git commit: save the file in local reporsitory
+•	git push: saves in remote repo like github
+•	Adding SSH key - testkey public and testkey private: Private can provide public key.
+Git Branching: 
+•	Git branch
+•	Git checkout -b feature (creating new branch)
+•	Git diff “name of the branch” :  shows what changes have been made.
+•	Git merge “name of the branch
+•	Git status:
+•	Git pull 
+•	Stash: changes somewhere and retrieve it later, like it is temporary holding place.
+•	Git reset “name of the file”
+
+Varma :https://www.youtube.com/watch?v=mU-hYeBBOzQ&feature=youtu.be
